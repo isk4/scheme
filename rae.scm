@@ -1,11 +1,6 @@
 #lang scheme
 (require net/http-easy)
 
-(define get-page (lambda (word)
-  (bytes->string/utf-8
-    (response-body
-      (get (string-append "https://dle.rae.es/" word "?m=form"))))))
-
 (define get-char-index (lambda (char str)
   (cond
     ((string=? str "") 1)
@@ -20,6 +15,11 @@
       ((> str1-length str2-length) str2-length)
       ((string=? str1 (substring str2 0 str1-length)) 0)
       (else (+ 1 (get-str-index str1 (substring str2 1 str2-length))))))))
+
+(define get-page (lambda (word)
+  (bytes->string/utf-8
+    (response-body
+      (get (string-append "https://dle.rae.es/" word "?m=form"))))))
 
 (define remove-tags (lambda (text)
   (let
